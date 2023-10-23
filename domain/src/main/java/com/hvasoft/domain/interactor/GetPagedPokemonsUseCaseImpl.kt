@@ -15,7 +15,7 @@ class GetPagedPokemonsUseCaseImpl @Inject constructor(
 ): GetPagedPokemonsUseCase {
 
     override fun invoke(): Flow<PagingData<Pokemon>> = flow {
-        val pagingData = pokemonRepository.getPagedPokemons()
+        val pagingData: Flow<PagingData<Pokemon>> = pokemonRepository.getPagedPokemons()
             .map { pagingData ->
                 pagingData.map { pokemonEntity ->
                     val newPokemonName = getNewPokemonName(pokemonEntity.name)
@@ -23,7 +23,11 @@ class GetPagedPokemonsUseCaseImpl @Inject constructor(
                         id = pokemonEntity.id,
                         name = newPokemonName,
                         url = pokemonEntity.url,
-                        isFavorite = pokemonEntity.isFavorite
+                        isFavorite = pokemonEntity.isFavorite,
+                        imageUrl = pokemonEntity.imageUrl,
+                        height = pokemonEntity.height,
+                        weight = pokemonEntity.weight,
+                        types = pokemonEntity.types
                     )
                 }
             }

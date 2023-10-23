@@ -5,29 +5,29 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hvasoft.data.local.entity.PokemonEntity
+import androidx.room.Transaction
+import com.hvasoft.data.local.entities.PokemonEntity
 
 @Dao
 interface PokemonDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPokemons(tvShows: List<PokemonEntity>)
+    suspend fun addPokemons(pokemons: List<PokemonEntity>)
 
-    @Query("SELECT * FROM pokemon")
+    @Transaction
+    @Query("SELECT * FROM pokemons")
     fun getPokemons(): PagingSource<Int, PokemonEntity>
 
-    @Query("SELECT COUNT(id) FROM pokemon")
+    @Query("SELECT COUNT(id) FROM pokemons")
     suspend fun existData(): Int
 
-    @Query("UPDATE pokemon SET isFavorite = :isFavorite WHERE id = :pokemonId")
+    @Query("UPDATE pokemons SET isFavorite = :isFavorite WHERE id = :pokemonId")
     suspend fun setIsFavorite(pokemonId: Int, isFavorite: Boolean)
 
-    @Query("DELETE FROM pokemon")
+    @Query("DELETE FROM pokemons")
     suspend fun clearPokemons()
 
-    @Query("SELECT * FROM pokemon WHERE id = :pokemonId")
+    @Query("SELECT * FROM pokemons WHERE id = :pokemonId")
     suspend fun getPokemonById(pokemonId: Int): PokemonEntity
 
-    @Query("SELECT * FROM pokemon WHERE isFavorite = 1")
-    suspend fun getFavorites(): List<PokemonEntity>
 }

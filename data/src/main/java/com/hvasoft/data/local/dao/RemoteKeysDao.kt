@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hvasoft.data.local.entity.RemoteKeysEntity
+import com.hvasoft.data.local.entities.RemoteKeysEntity
 
 @Dao
 interface RemoteKeysDao {

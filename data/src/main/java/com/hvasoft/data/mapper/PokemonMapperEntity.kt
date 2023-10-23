@@ -1,9 +1,12 @@
 package com.hvasoft.data.mapper
 
-import com.hvasoft.data.local.entity.PokemonEntity
+import com.hvasoft.data.local.entities.PokemonEntity
 import com.hvasoft.domain.model.Pokemon
+import javax.inject.Inject
 
-class PokemonMapperEntity : Mapper<PokemonEntity, Pokemon> {
+class PokemonMapperEntity @Inject constructor(
+    private val pokemonTypeMapperEntity: PokemonTypeMapperEntity
+): Mapper<PokemonEntity, Pokemon> {
 
     override fun map(input: PokemonEntity): Pokemon {
         return with(input) {
@@ -11,7 +14,11 @@ class PokemonMapperEntity : Mapper<PokemonEntity, Pokemon> {
                 id = id,
                 name = name,
                 url = url,
-                isFavorite = isFavorite
+                isFavorite = isFavorite,
+                imageUrl = imageUrl,
+                height = height,
+                weight = weight,
+                types = types.map { pokemonTypeEntity -> pokemonTypeMapperEntity.map(pokemonTypeEntity) }
             )
         }
     }

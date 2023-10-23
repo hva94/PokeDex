@@ -11,11 +11,11 @@ material = "1.9.0"
 constraintlayout = "2.1.4"
 glide = "4.16.0"
 
-# Paging3
-paging3 = "3.1.1"
+# paging
+paging = "3.1.1"
 
 # DI
-hilt = "2.47"
+hilt = "2.48"
 
 # Navigation
 navigation = "2.5.3"
@@ -27,7 +27,7 @@ loggin-interceptor = "4.11.0"
 pagingCommonKtx = "3.2.1"
 
 # Database
-room = "2.5.1"
+room = "2.6.0"
 
 # Testing
 junit = "4.13.2"
@@ -45,8 +45,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
-# Paging3
-paging3-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging3" }
+# Paging
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 # DI
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
@@ -67,7 +69,6 @@ logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercep
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -79,7 +80,7 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 [bundles]
 android-core-testing-impl = ["androidx-test-ext-junit", "androidx-test-ext", "androidx-espresso-core"]
 hilt-impl = ["hilt-android"]
-paging3-impl = ["paging3-runtime"]
+paging-impl = ["paging-runtime"]
 networking-impl = ["retrofit", "converter-gson", "converter-moshi", "moshi-kotlin", "logging-interceptor"]
 database-impl = ["room", "room-ktx"]
 

@@ -61,8 +61,10 @@ dependencies {
     kapt(libs.room.compiler)
 
     // Paging3
-    implementation(libs.bundles.paging3.impl)
+    implementation(libs.bundles.paging.impl)
+    implementation(libs.paging.runtime)
     implementation(libs.room.paging)
+    testImplementation(libs.paging.common)
 
     implementation(libs.core.ktx)
     testImplementation(libs.junit)

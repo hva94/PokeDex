@@ -17,7 +17,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesTvShowDatabase(@ApplicationContext context: Context): PokemonDatabase =
+    fun providesPokemonDatabase(@ApplicationContext context: Context): PokemonDatabase =
         Room.databaseBuilder(
             context,
             PokemonDatabase::class.java,
@@ -26,7 +26,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesTvShowDao(pokemonDatabase: PokemonDatabase): PokemonDao =
+    fun providesPokemonDao(pokemonDatabase: PokemonDatabase): PokemonDao =
         pokemonDatabase.pokemonDao()
 
 }

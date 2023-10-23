@@ -23,6 +23,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
         }
     }
     compileOptions {
@@ -44,7 +48,10 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     // Paging3
-    api(libs.bundles.paging3.impl)
+    implementation(libs.bundles.paging.impl)
+    implementation(libs.paging.runtime)
+    implementation(libs.room.paging)
+    testImplementation(libs.paging.common)
 
     implementation(libs.core.ktx)
     testImplementation(libs.junit)
