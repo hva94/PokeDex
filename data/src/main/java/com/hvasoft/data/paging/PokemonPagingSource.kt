@@ -2,8 +2,7 @@ package com.hvasoft.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.hvasoft.data.mapper.toDomain
-import com.hvasoft.data.networking.PokemonApi
+import com.hvasoft.data.remote.PokemonApi
 import com.hvasoft.domain.model.Pokemon
 
 class PokemonPagingSource(
@@ -25,7 +24,7 @@ class PokemonPagingSource(
             val response = pokemonApi.getPokemons(limit = limit, offset = offset)
             if (response.isSuccessful && response.body() != null) {
                 val responseBody = response.body()!!
-                val pokemons: List<Pokemon> = responseBody.result.map { it.toDomain() }
+                val pokemons: List<Pokemon> = responseBody.results.map { it.toDomain() }
                 val endOfPaginationReached = pokemons.isEmpty()
 
                 LoadResult.Page(

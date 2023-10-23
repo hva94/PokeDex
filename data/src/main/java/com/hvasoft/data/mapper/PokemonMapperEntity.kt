@@ -3,15 +3,15 @@ package com.hvasoft.data.mapper
 import com.hvasoft.data.local.entity.PokemonEntity
 import com.hvasoft.domain.model.Pokemon
 
-class PokemonMapper : Mapper<Pokemon, PokemonEntity> {
+class PokemonMapperEntity : Mapper<PokemonEntity, Pokemon> {
 
-    override fun map(input: Pokemon): PokemonEntity {
+    override fun map(input: PokemonEntity): Pokemon {
         return with(input) {
-            PokemonEntity(
-                id = 0,
+            Pokemon(
+                id = id,
                 name = name,
                 url = url,
-                isFavorite = false
+                isFavorite = isFavorite
             )
         }
     }

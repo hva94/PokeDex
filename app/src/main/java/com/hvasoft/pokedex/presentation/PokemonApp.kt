@@ -1,4 +1,4 @@
-package com.hvasoft.pokedex
+package com.hvasoft.pokedex.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

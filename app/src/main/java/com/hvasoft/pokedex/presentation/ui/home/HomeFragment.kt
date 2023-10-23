@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.PagingData
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hvasoft.domain.model.Pokemon
 import com.hvasoft.pokedex.R
 import com.hvasoft.pokedex.databinding.FragmentHomeBinding
 import com.hvasoft.pokedex.presentation.ui.common.showPopUpMessage
+import com.hvasoft.pokedex.presentation.ui.home.adapter.HomeLoadStateAdapter
 import com.hvasoft.pokedex.presentation.ui.home.adapter.HomePagingAdapter
 import com.hvasoft.pokedex.presentation.ui.home.adapter.OnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,7 +47,12 @@ class HomeFragment : Fragment(), OnClickListener {
     }
 
     private fun setupRecyclerView() {
-        homePagingAdapter = HomePagingAdapter(this)
+        homePagingAdapter = HomePagingAdapter(this).apply {
+            this.withLoadStateHeaderAndFooter(
+            header = HomeLoadStateAdapter { homePagingAdapter.retry() },
+            footer = HomeLoadStateAdapter { homePagingAdapter.retry() }
+        )
+        }
         val gridLayoutManager =
             GridLayoutManager(context, resources.getInteger(R.integer.main_columns))
         binding.homeRecyclerView.apply {
@@ -58,36 +64,32 @@ class HomeFragment : Fragment(), OnClickListener {
 
     private fun setupViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                with(binding) {
-                    homeViewModel.uiState.collectLatest { homeState ->
-                        when (homeState) {
-                            is HomeState.Loading -> homeProgressBar.isVisible = true
-
-                            is HomeState.Empty -> {
-                                homeProgressBar.isVisible = false
-                                emptyStateLayout.isVisible = true
-                                homePagingAdapter.submitData(PagingData.empty())
-                            }
-
-                            is HomeState.Success -> {
-                                homeProgressBar.isVisible = false
-                                emptyStateLayout.isVisible = false
-                                homePagingAdapter.submitData(homeState.pagingData)
-                                homePagingAdapter.refresh()
-                            }
-
-                            is HomeState.Failure -> {
-                                homeProgressBar.isVisible = false
-                                showPopUpMessage(
-                                    homeState.errorMessage ?: R.string.error_unknown,
-                                    isError = true
-                                )
-                            }
-                        }
+            homeViewModel.uiState.collectLatest { state ->
+                when (state) {
+                    is HomeState.Loading -> {
+                        binding.homeRecyclerView.isVisible = false
+                        binding.homeProgressBar.isVisible = true
+                    }
+                    is HomeState.Success -> {
+                        binding.homeRecyclerView.isVisible = true
+                        binding.homeProgressBar.isVisible = false
+                        homePagingAdapter.submitData(state.pagingData)
+                    }
+                    is HomeState.Failure -> {
+                        binding.homeRecyclerView.isVisible = false
+                        binding.homeProgressBar.isVisible = false
+                        if (state.errorMessage != null)
+                            showPopUpMessage(state.errorMessage, isError = true)
                     }
                 }
             }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            homePagingAdapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.homeRecyclerView.scrollToPosition(0) }
         }
     }
 
@@ -97,7 +99,7 @@ class HomeFragment : Fragment(), OnClickListener {
     }
 
     override fun onClickPokemon(pokemon: Pokemon) {
-        showPopUpMessage(pokemon.name ?: R.string.pokemon_unknown)
+        showPopUpMessage(pokemon.url)
     }
 
 }

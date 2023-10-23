@@ -9,6 +9,7 @@
     <dimen name="common_padding_default">16dp</dimen>
 
     <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_64">64dp</dimen>
     <dimen name="dimen_250">250dp</dimen>
     <dimen name="dimen_280">280dp</dimen>
 

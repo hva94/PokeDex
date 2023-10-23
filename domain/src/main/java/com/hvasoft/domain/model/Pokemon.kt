@@ -1,6 +1,8 @@
 package com.hvasoft.domain.model
 
 data class Pokemon(
-    val name: String? = null,
-    val imageUrl: String? = null
+    val id: Int,
+    val name: String,
+    val url: String,
+    val isFavorite: Boolean
 )

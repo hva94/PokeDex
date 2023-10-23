@@ -24,6 +24,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
         }
     }
     compileOptions {
@@ -32,6 +36,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    buildFeatures {
+        buildConfig = true
     }
     hilt {
         enableAggregatingTask = true
@@ -49,8 +56,20 @@ dependencies {
     // Networking
     api(libs.bundles.networking.impl)
 
+    // Database
+    implementation(libs.bundles.database.impl)
+    kapt(libs.room.compiler)
+
+    // Paging3
+    implementation(libs.bundles.paging3.impl)
+    implementation(libs.room.paging)
+
     implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }

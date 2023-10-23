@@ -31,16 +31,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ViewStub
-        android:id="@+id/emptyStateLayout"
+    <Button
+        android:id="@+id/btnRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout="@layout/empty_state_home"
+        android:textAppearance="?attr/textAppearanceButton"
+        android:text="@string/retry"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_unknown"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:paddingBottom="@dimen/dimen_64"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/btnRetry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnRetry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

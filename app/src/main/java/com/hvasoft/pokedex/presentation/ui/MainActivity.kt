@@ -1,7 +1,8 @@
-package com.hvasoft.pokedex.presentation
+package com.hvasoft.pokedex.presentation.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        setSupportActionBar(findViewById(R.id.toolbar))
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fcvNavHost) as NavHostFragment
         navController = navHostFragment.navController

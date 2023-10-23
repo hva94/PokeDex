@@ -1,6 +1,6 @@
-package com.hvasoft.data.networking
+package com.hvasoft.data.remote
 
-import com.hvasoft.data.networking.model.PokemonMainResponse
+import com.hvasoft.data.remote.model.PokemonResponseDTO
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,6 +11,6 @@ interface PokemonApi {
     suspend fun getPokemons(
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Response<PokemonMainResponse>
+    ): Response<PokemonResponseDTO>
 
 }

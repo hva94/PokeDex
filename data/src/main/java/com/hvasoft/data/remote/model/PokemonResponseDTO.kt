@@ -1,8 +1,8 @@
-package com.hvasoft.data.networking.model
+package com.hvasoft.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonMainResponse(
+data class PokemonResponseDTO(
     @SerializedName("count")
     val count: Int? = null,
     @SerializedName("next")
@@ -10,5 +10,5 @@ data class PokemonMainResponse(
     @SerializedName("previous")
     val previous: String? = null,
     @SerializedName("results")
-    val result: List<PokemonResponse>
+    val results: List<PokemonDTO>
 )

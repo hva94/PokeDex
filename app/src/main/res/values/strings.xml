@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">PokeDex</string>
 
-    <string name="text_no_pokemons">No Pokemons Found!</string>
-    <string name="text_empty_state_pokemons">There are no pokemons here.</string>
+    <string name="app_name">PokeDex</string>
     <string name="pokemon_unknown">Unknown Pokemon</string>
     <string name="error_unknown">Something went wrong</string>
+    <string name="retry">Try again</string>
 
 </resources>

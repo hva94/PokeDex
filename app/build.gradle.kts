@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.hvasoft.pokedex"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.hvasoft.pokedex"
@@ -40,9 +40,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        buildConfig = true
     }
     hilt {
         enableAggregatingTask = true

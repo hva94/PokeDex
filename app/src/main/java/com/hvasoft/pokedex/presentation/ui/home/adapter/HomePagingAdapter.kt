@@ -1,7 +1,6 @@
 package com.hvasoft.pokedex.presentation.ui.home.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hvasoft.domain.model.Pokemon
 import com.hvasoft.pokedex.R
 import com.hvasoft.pokedex.databinding.ItemPokemonBinding
-import com.hvasoft.pokedex.presentation.ui.common.loadImageWithUrl
 
 class HomePagingAdapter(private val listener: OnClickListener) :
     PagingDataAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback()) {
@@ -32,7 +30,7 @@ class HomePagingAdapter(private val listener: OnClickListener) :
                 setListener(pokemon)
                 with(binding) {
                     tvPokemonName.text = pokemon.name
-                    ivPokemon.loadImageWithUrl(pokemon.imageUrl)
+//                    ivPokemon.loadImageWithUrl(pokemon.url)
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.hvasoft.data.di
 
-import com.hvasoft.data.networking.PokemonApi
+import com.hvasoft.data.local.PokemonDatabase
+import com.hvasoft.data.mapper.PokemonMapper
+import com.hvasoft.data.remote.PokemonApi
 import com.hvasoft.data.repository.PokemonRepositoryImpl
 import com.hvasoft.domain.repository.PokemonRepository
 import dagger.Module
@@ -17,6 +19,12 @@ object RepositoryModule {
     @Provides
     fun providePokemonRepository(
         pokemonApi: PokemonApi,
-    ): PokemonRepository = PokemonRepositoryImpl(pokemonApi)
+        pokemonDatabase: PokemonDatabase,
+        pokemonMapper: PokemonMapper
+    ): PokemonRepository = PokemonRepositoryImpl(
+        pokemonApi,
+        pokemonDatabase,
+        pokemonMapper
+    )
 
 }
