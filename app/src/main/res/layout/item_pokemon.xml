@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/item_card_width"
     android:layout_height="@dimen/item_card_height"
-    android:layout_width="@dimen/item_card_width">
+    tools:ignore="TextSizeCheck">
 
     <ImageView
-        android:background="@drawable/circle_background"
-        android:contentDescription="@null"
         android:id="@+id/ivPokemon"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/circle_background"
+        android:contentDescription="@string/pokemon_description"
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/tvPokemonName"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:minHeight="128dp"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="96sp"
@@ -25,16 +25,16 @@
 
     <Button
         android:id="@+id/btnRetry"
-        android:visibility="gone"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/pbLoading"
-        android:indeterminate="true"
-        android:layout_gravity="end|bottom"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:indeterminate="true"
         android:visibility="gone" />
 
 </FrameLayout>
