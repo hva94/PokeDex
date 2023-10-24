@@ -7,5 +7,6 @@
     <color name="my_dark_primary">#FF4500</color>
     <color name="text_light_primary">#FF000000</color>
     <color name="text_dark_primary">#FFFFFFFF</color>
+    <color name="accent">#E92662</color>
 
 </resources>

@@ -29,3 +29,9 @@ sprite frontal por defecto, altura, peso, nombre de los tipos del pokémon. "
 
 2.2. En una pantalla mostrar un listado vertical con el nombre y el sprite del Pokémon. 
 Utilizar el componente de la actividad 1 para mostrar la imagen o la inicial del nombre.
+
+2.3. Al llegar al final del listado obtener los siguientes 25 elementos.
+
+2.4. La información debe estar disponible cuando el dispositivo no tenga conexión a internet.
+
+2.7. Permitir marcar/desmarcar un pokémon como favorito desde la pantalla principal (pendiente).

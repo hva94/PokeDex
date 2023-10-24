@@ -13,6 +13,17 @@
         android:contentDescription="@string/pokemon_description"
         android:scaleType="centerCrop" />
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:visibility="gone"
+        android:button="@drawable/states_cb_favorite"
+        android:contentDescription="@string/favorite_description"
+        android:layout_margin="@dimen/common_padding_default"
+        android:padding="@dimen/common_padding_min"/>
+
     <TextView
         android:id="@+id/tvPokemonName"
         android:layout_width="wrap_content"
@@ -24,7 +35,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="visible"
-        tools:text="Pokemon Name" />
+        tools:text="Charizard" />
 
     <Button
         android:id="@+id/btnRetry"
