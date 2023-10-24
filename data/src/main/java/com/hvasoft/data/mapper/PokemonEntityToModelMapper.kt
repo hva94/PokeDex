@@ -4,9 +4,9 @@ import com.hvasoft.data.local.entities.PokemonEntity
 import com.hvasoft.domain.model.Pokemon
 import javax.inject.Inject
 
-class PokemonMapperEntity @Inject constructor(
-    private val pokemonTypeMapperEntity: PokemonTypeMapperEntity,
-    private val pokemonSpriteMapperEntity: PokemonSpriteMapperEntity
+class PokemonEntityToModelMapper @Inject constructor(
+    private val pokemonTypeEntityToModelMapper: PokemonTypeEntityToModelMapper,
+    private val pokemonSpriteEntityToModelMapper: PokemonSpriteEntityToModelMapper
 ): Mapper<PokemonEntity, Pokemon> {
 
     override fun map(input: PokemonEntity): Pokemon {
@@ -18,8 +18,8 @@ class PokemonMapperEntity @Inject constructor(
                 isFavorite = isFavorite,
                 height = height,
                 weight = weight,
-                types = types?.map { pokemonTypeEntity -> pokemonTypeMapperEntity.map(pokemonTypeEntity) } ?: emptyList(),
-                sprites = sprites?.map { pokemonSpriteEntity -> pokemonSpriteMapperEntity.map(pokemonSpriteEntity) } ?: emptyList()
+                types = types?.map { pokemonTypeEntity -> pokemonTypeEntityToModelMapper.map(pokemonTypeEntity) } ?: emptyList(),
+                sprites = sprites?.map { pokemonSpriteEntity -> pokemonSpriteEntityToModelMapper.map(pokemonSpriteEntity) } ?: emptyList()
             )
         }
     }

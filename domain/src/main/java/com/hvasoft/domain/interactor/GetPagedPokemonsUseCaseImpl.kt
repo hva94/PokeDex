@@ -12,13 +12,16 @@ import javax.inject.Inject
 
 class GetPagedPokemonsUseCaseImpl @Inject constructor(
     private val pokemonRepository: PokemonRepository
-): GetPagedPokemonsUseCase {
+) : GetPagedPokemonsUseCase {
 
     override fun invoke(): Flow<PagingData<Pokemon>> = flow {
         val pagingData: Flow<PagingData<Pokemon>> = pokemonRepository.getPagedPokemons()
             .map { pagingData ->
                 pagingData.map { pokemonEntity ->
-                    val newPokemonName = getNewPokemonName(pokemonEntity.name)
+                    val newPokemonName = getNewPokemonName(
+                        pokemonEntity.name,
+                        pokemonEntity.sprites.first().frontDefault
+                    )
                     Pokemon(
                         id = pokemonEntity.id,
                         name = newPokemonName,
@@ -34,14 +37,22 @@ class GetPagedPokemonsUseCaseImpl @Inject constructor(
         emitAll(pagingData)
     }
 
-    private fun getNewPokemonName(name: String): String {
+    private fun getNewPokemonName(name: String, frontDefault: String): String {
         val words = name.split(" ")
-        if (words.isNotEmpty()) {
-            val firstWord = words.first()
-            if (firstWord.length > 2)
-                return firstWord.replaceFirstChar { it.uppercaseChar() }
+        if (frontDefault.isNotEmpty()) {
+            if (words.isNotEmpty()) {
+                val firstWord = words.first()
+                if (firstWord.length > 2)
+                    return firstWord.replaceFirstChar { it.uppercaseChar() }
+            }
+            return name
+        } else {
+            if (words.size <= 2) {
+                val firstLetters = words.take(2).map { it.first().uppercaseChar() }
+                return firstLetters.joinToString("")
+            }
+            return name
         }
-        return name
     }
 
 }

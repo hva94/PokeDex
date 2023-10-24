@@ -1,10 +1,11 @@
 <resources>
 
     <string name="app_name">PokeDex</string>
-    <string name="pokemon_description">Pokemon</string>
-    <string name="favorite_description">Favorite</string>
+    <string name="pokemon_description">Pokemon Image</string>
+    <string name="favorite_description">Check/Uncheck as Favorite</string>
+
+    <string name="retry">Try again</string>
     <string name="pokemon_unknown">Unknown Pokemon</string>
     <string name="error_unknown">Something went wrong</string>
-    <string name="retry">Try again</string>
 
 </resources>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/item_card_width"
     android:layout_height="@dimen/item_card_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="TextSizeCheck">
 
     <ImageView
@@ -13,16 +14,41 @@
         android:contentDescription="@string/pokemon_description"
         android:scaleType="centerCrop" />
 
-    <com.google.android.material.checkbox.MaterialCheckBox
+    <ImageView
+        android:id="@+id/ivPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:background="@drawable/ic_placeholder"
+        android:backgroundTint="?attr/colorOnPrimary"
+        android:contentDescription="@string/pokemon_description"
+        android:scaleType="centerCrop" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cbFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
-        android:visibility="gone"
-        android:button="@drawable/states_cb_favorite"
+        android:visibility="visible"
+        android:button="@drawable/ic_favorite_checkbox"
+        app:buttonTint="?attr/colorOnPrimary"
         android:contentDescription="@string/favorite_description"
         android:layout_margin="@dimen/common_padding_default"
         android:padding="@dimen/common_padding_min"/>
+
+    <TextView
+        android:id="@+id/tvInitials"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:minHeight="128dp"
+        android:singleLine="true"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="108sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="CR"/>
 
     <TextView
         android:id="@+id/tvPokemonName"

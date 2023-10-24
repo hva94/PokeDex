@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hvasoft.domain.model.Pokemon
 import com.hvasoft.pokedex.R
 import com.hvasoft.pokedex.databinding.ItemPokemonBinding
+import com.hvasoft.pokedex.presentation.ui.common.isInputInitialValid
 import com.hvasoft.pokedex.presentation.ui.common.loadImageWithUrl
 
 class HomePagingAdapter(private val listener: OnClickListener) :
@@ -31,16 +32,30 @@ class HomePagingAdapter(private val listener: OnClickListener) :
             pokemon?.let { pokemon ->
                 setListener(pokemon)
                 with(binding) {
+                    val imageUrl = pokemon.sprites.first().frontDefault
                     ivPokemon.loadImageWithUrl(
-                        url = pokemon.sprites.first().frontDefault,
+                        url = imageUrl,
                         isCircle = true,
                         onSuccess = {
                             tvPokemonName.isVisible = true
                             tvPokemonName.text = pokemon.name
+                            cbFavorite.isVisible = true
+                            cbFavorite.isChecked = pokemon.isFavorite
+                            ivPlaceholder.isVisible = false
                         },
                         onError = {
-                            tvPokemonName.isVisible = false
-                            tvPokemonName.text = ""
+                            if (pokemon.name.isInputInitialValid()) {
+                                tvPokemonName.isVisible = false
+                                cbFavorite.isVisible = false
+                                tvInitials.isVisible = true
+                                tvInitials.text = pokemon.name
+                                ivPlaceholder.isVisible = false
+                            } else {
+                                tvPokemonName.isVisible = false
+                                cbFavorite.isVisible = false
+                                tvInitials.isVisible = false
+                                ivPlaceholder.isVisible = true
+                            }
                         }
                     )
                 }
@@ -55,12 +70,15 @@ class HomePagingAdapter(private val listener: OnClickListener) :
             binding.root.setOnClickListener {
                 listener.onClickPokemon(pokemon)
             }
+            binding.cbFavorite.setOnClickListener {
+                listener.onClickFavorite(pokemon)
+            }
         }
     }
 
     class PokemonDiffCallback : DiffUtil.ItemCallback<Pokemon>() {
         override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {

@@ -99,7 +99,11 @@ class HomeFragment : Fragment(), OnClickListener {
     }
 
     override fun onClickPokemon(pokemon: Pokemon) {
-        showPopUpMessage(pokemon.url)
+        showPopUpMessage(pokemon.sprites.first().frontDefault)
+    }
+
+    override fun onClickFavorite(pokemon: Pokemon) {
+        homeViewModel.updatePokemon(pokemon)
     }
 
 }

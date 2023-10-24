@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.hvasoft.domain.interactor.GetPagedPokemonsUseCase
+import com.hvasoft.domain.interactor.UpdatePokemonUseCase
+import com.hvasoft.domain.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getPagedPokemonsUseCase: GetPagedPokemonsUseCase
+    private val getPagedPokemonsUseCase: GetPagedPokemonsUseCase,
+    private val updatePokemonUseCase: UpdatePokemonUseCase
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow<HomeState>(HomeState.Loading)
@@ -38,6 +41,12 @@ class HomeViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiState.update { HomeState.Failure(e.localizedMessage) }
             }
+        }
+    }
+
+    fun updatePokemon(pokemon: Pokemon) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updatePokemonUseCase(pokemon)
         }
     }
 }

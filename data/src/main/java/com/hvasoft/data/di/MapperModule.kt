@@ -1,9 +1,11 @@
 package com.hvasoft.data.di
 
-import com.hvasoft.data.mapper.PokemonMapper
-import com.hvasoft.data.mapper.PokemonMapperEntity
-import com.hvasoft.data.mapper.PokemonSpriteMapperEntity
-import com.hvasoft.data.mapper.PokemonTypeMapperEntity
+import com.hvasoft.data.mapper.PokemonEntityToModelMapper
+import com.hvasoft.data.mapper.PokemonSpriteEntityToModelMapper
+import com.hvasoft.data.mapper.PokemonSpriteToEntityMapper
+import com.hvasoft.data.mapper.PokemonToEntityMapper
+import com.hvasoft.data.mapper.PokemonTypeEntityToModelMapper
+import com.hvasoft.data.mapper.PokemonTypeToEntityMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,24 +18,38 @@ object MapperModule {
 
     @Provides
     @Singleton
-    fun providesPokemonTypeMapperEntity(): PokemonTypeMapperEntity = PokemonTypeMapperEntity()
+    fun providesPokemonSpriteToEntityMapper(): PokemonSpriteToEntityMapper = PokemonSpriteToEntityMapper()
 
     @Provides
     @Singleton
-    fun providesPokemonSpriteMapperEntity(): PokemonSpriteMapperEntity = PokemonSpriteMapperEntity()
+    fun providesPokemonTypeToEntityMapper(): PokemonTypeToEntityMapper = PokemonTypeToEntityMapper()
 
     @Provides
     @Singleton
-    fun providesPokemonMapper(): PokemonMapper = PokemonMapper()
-
-    @Provides
-    @Singleton
-    fun providesPokemonMapperEntity(
-        pokemonTypeMapperEntity: PokemonTypeMapperEntity,
-        pokemonSpriteMapperEntity: PokemonSpriteMapperEntity
-    ): PokemonMapperEntity = PokemonMapperEntity(
-        pokemonTypeMapperEntity,
-        pokemonSpriteMapperEntity
+    fun providesPokemonEntityToModelMapper(
+        pokemonTypeEntityToModelMapper: PokemonTypeEntityToModelMapper,
+        pokemonSpriteEntityToModelMapper: PokemonSpriteEntityToModelMapper
+    ): PokemonEntityToModelMapper = PokemonEntityToModelMapper(
+        pokemonTypeEntityToModelMapper,
+        pokemonSpriteEntityToModelMapper
     )
+
+    @Provides
+    @Singleton
+    fun providesPokemonSpriteEntityToModelMapper(): PokemonSpriteEntityToModelMapper = PokemonSpriteEntityToModelMapper()
+
+    @Provides
+    @Singleton
+    fun providesPokemonToEntityMapper(
+        pokemonTypeToEntityMapper: PokemonTypeToEntityMapper,
+        pokemonSpriteToEntityMapper: PokemonSpriteToEntityMapper
+    ): PokemonToEntityMapper = PokemonToEntityMapper(
+        pokemonTypeToEntityMapper,
+        pokemonSpriteToEntityMapper
+    )
+
+    @Provides
+    @Singleton
+    fun providesPokemonTypeEntityToModelMapper(): PokemonTypeEntityToModelMapper = PokemonTypeEntityToModelMapper()
 
 }

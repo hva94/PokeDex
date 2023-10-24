@@ -10,7 +10,8 @@ import com.hvasoft.data.common.Constants
 import com.hvasoft.data.local.PokemonDatabase
 import com.hvasoft.data.local.dao.PokemonDao
 import com.hvasoft.data.local.entities.PokemonEntity
-import com.hvasoft.data.mapper.PokemonMapperEntity
+import com.hvasoft.data.mapper.PokemonEntityToModelMapper
+import com.hvasoft.data.mapper.PokemonToEntityMapper
 import com.hvasoft.data.paging.PokemonRemoteMediator
 import com.hvasoft.data.remote.PokemonApi
 import com.hvasoft.domain.model.Pokemon
@@ -23,7 +24,8 @@ class PokemonRepositoryImpl @Inject constructor(
     private val pokemonDao: PokemonDao,
     private val pokemonApi: PokemonApi,
     private val pokemonDatabase: PokemonDatabase,
-    private val pokemonMapperEntity: PokemonMapperEntity
+    private val pokemonToEntityMapper: PokemonToEntityMapper,
+    private val pokemonEntityToModelMapper: PokemonEntityToModelMapper
 ) : PokemonRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -38,7 +40,11 @@ class PokemonRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = pokemonsSourceFactory
         ).flow
-            .map { page -> page.map { pokemonMapperEntity.map(it) } }
+            .map { page -> page.map { pokemonEntityToModelMapper.map(it) } }
+    }
+
+    override suspend fun updatePokemon(pokemon: Pokemon): Int {
+        return pokemonDao.updatePokemon(pokemonToEntityMapper.map(pokemon))
     }
 
 }

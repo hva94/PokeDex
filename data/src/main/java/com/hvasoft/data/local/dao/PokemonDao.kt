@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.hvasoft.data.local.entities.PokemonEntity
 
 @Dao
@@ -21,8 +22,8 @@ interface PokemonDao {
     @Query("SELECT COUNT(id) FROM pokemons")
     suspend fun existData(): Int
 
-    @Query("UPDATE pokemons SET isFavorite = :isFavorite WHERE id = :pokemonId")
-    suspend fun setIsFavorite(pokemonId: Int, isFavorite: Boolean)
+    @Update
+    suspend fun updatePokemon(pokemonEntity: PokemonEntity): Int
 
     @Query("DELETE FROM pokemons")
     suspend fun clearPokemons()

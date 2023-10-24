@@ -2,7 +2,8 @@ package com.hvasoft.data.di
 
 import com.hvasoft.data.local.PokemonDatabase
 import com.hvasoft.data.local.dao.PokemonDao
-import com.hvasoft.data.mapper.PokemonMapperEntity
+import com.hvasoft.data.mapper.PokemonEntityToModelMapper
+import com.hvasoft.data.mapper.PokemonToEntityMapper
 import com.hvasoft.data.remote.PokemonApi
 import com.hvasoft.data.repository.PokemonRepositoryImpl
 import com.hvasoft.domain.repository.PokemonRepository
@@ -22,12 +23,14 @@ object RepositoryModule {
         pokemonDao: PokemonDao,
         pokemonApi: PokemonApi,
         pokemonDatabase: PokemonDatabase,
-        pokemonMapperEntity: PokemonMapperEntity
+        pokemonToEntityMapper: PokemonToEntityMapper,
+        pokemonEntityToModelMapper: PokemonEntityToModelMapper
     ): PokemonRepository = PokemonRepositoryImpl(
         pokemonDao,
         pokemonApi,
         pokemonDatabase,
-        pokemonMapperEntity
+        pokemonToEntityMapper,
+        pokemonEntityToModelMapper
     )
 
 }

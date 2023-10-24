@@ -4,4 +4,5 @@ import com.hvasoft.domain.model.Pokemon
 
 interface OnClickListener {
     fun onClickPokemon(pokemon: Pokemon)
+    fun onClickFavorite(pokemon: Pokemon)
 }

@@ -27,7 +27,7 @@ loggin-interceptor = "4.11.0"
 pagingCommonKtx = "3.2.1"
 
 # Database
-room = "2.6.0"
+room = "2.5.1"
 
 # Testing
 junit = "4.13.2"

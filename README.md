@@ -11,7 +11,12 @@ primeras dos palabras de la cadena.
 
 1.1. Si la url está vacía o no se puede recuperar la imagen, mostrar las iniciales.
 
+1.2. Si no se puede mostrar la imagen y la cadena está vacía mostrar un placeholder.
+
 1.3. "Si sólo se tiene una palabra, mostrar sólo una inicial."
+
+1.4. Si no se puede mostrar la imagen y la primera palabra comienza con número o un carácter 
+fuera del alfabeto, mostrar un placeholder.
 
 1.5. Las iniciales se deben mostrar en mayúsculas.
 
@@ -34,4 +39,4 @@ Utilizar el componente de la actividad 1 para mostrar la imagen o la inicial del
 
 2.4. La información debe estar disponible cuando el dispositivo no tenga conexión a internet.
 
-2.7. Permitir marcar/desmarcar un pokémon como favorito desde la pantalla principal (pendiente).
+2.7. Permitir marcar/desmarcar un pokémon como favorito desde la pantalla principal.

@@ -1,7 +1,5 @@
 package com.hvasoft.pokedex.presentation.ui.common
 
-//import com.bumptech.glide.Glide
-//import com.bumptech.glide.load.engine.DiskCacheStrategy
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -59,4 +57,16 @@ fun ImageView.loadImageWithUrl(
                 onError()
             }
         })
+}
+
+fun String.isInputInitialValid(): Boolean {
+    if (isEmpty())
+        return false
+    val words = split(" ")
+    if (words.isNotEmpty()) {
+        val firstWord = words.first()
+        if (firstWord.isNotEmpty() && !firstWord.first().isLetterOrDigit())
+            return false
+    }
+    return false
 }
