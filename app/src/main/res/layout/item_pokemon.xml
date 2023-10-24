@@ -14,14 +14,17 @@
         android:scaleType="centerCrop" />
 
     <TextView
+        android:id="@+id/tvPokemonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:minHeight="128dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:minHeight="40dp"
+        android:singleLine="true"
         android:textColor="?attr/colorOnPrimary"
-        android:textSize="96sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        tools:text="RV" />
+        android:visibility="visible"
+        tools:text="Pokemon Name" />
 
     <Button
         android:id="@+id/btnRetry"

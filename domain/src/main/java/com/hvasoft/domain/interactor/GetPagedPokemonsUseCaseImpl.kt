@@ -24,10 +24,10 @@ class GetPagedPokemonsUseCaseImpl @Inject constructor(
                         name = newPokemonName,
                         url = pokemonEntity.url,
                         isFavorite = pokemonEntity.isFavorite,
-                        imageUrl = pokemonEntity.imageUrl,
                         height = pokemonEntity.height,
                         weight = pokemonEntity.weight,
-                        types = pokemonEntity.types
+                        types = pokemonEntity.types,
+                        sprites = pokemonEntity.sprites
                     )
                 }
             }
@@ -36,9 +36,10 @@ class GetPagedPokemonsUseCaseImpl @Inject constructor(
 
     private fun getNewPokemonName(name: String): String {
         val words = name.split(" ")
-        if (words.size <= 2) {
-            val firstLetters = words.take(2).map { it.first().uppercaseChar() }
-            return firstLetters.joinToString("")
+        if (words.isNotEmpty()) {
+            val firstWord = words.first()
+            if (firstWord.length > 2)
+                return firstWord.replaceFirstChar { it.uppercaseChar() }
         }
         return name
     }

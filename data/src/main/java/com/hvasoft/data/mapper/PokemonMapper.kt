@@ -8,8 +8,9 @@ class PokemonMapper : Mapper<PokemonType, PokemonTypeEntity> {
     override fun map(input: PokemonType): PokemonTypeEntity {
         return with(input) {
             PokemonTypeEntity(
-                id = 0,
-                name = name
+                id = id,
+                name = name,
+                url = url
             )
         }
     }

@@ -4,12 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hvasoft.domain.model.Pokemon
 import com.hvasoft.pokedex.R
 import com.hvasoft.pokedex.databinding.ItemPokemonBinding
+import com.hvasoft.pokedex.presentation.ui.common.loadImageWithUrl
 
 class HomePagingAdapter(private val listener: OnClickListener) :
     PagingDataAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback()) {
@@ -29,8 +31,18 @@ class HomePagingAdapter(private val listener: OnClickListener) :
             pokemon?.let { pokemon ->
                 setListener(pokemon)
                 with(binding) {
-                    tvPokemonName.text = pokemon.name
-//                    ivPokemon.loadImageWithUrl(pokemon.url)
+                    ivPokemon.loadImageWithUrl(
+                        url = pokemon.sprites.first().frontDefault,
+                        isCircle = true,
+                        onSuccess = {
+                            tvPokemonName.isVisible = true
+                            tvPokemonName.text = pokemon.name
+                        },
+                        onError = {
+                            tvPokemonName.isVisible = false
+                            tvPokemonName.text = ""
+                        }
+                    )
                 }
             }
         }

@@ -8,7 +8,8 @@ class PokemonTypeMapperEntity : Mapper<PokemonTypeEntity, PokemonType> {
         return with(input) {
             PokemonType(
                 id = id,
-                name = name
+                name = name,
+                url = url
             )
         }
     }

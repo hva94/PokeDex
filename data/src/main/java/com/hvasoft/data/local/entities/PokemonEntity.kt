@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "pokemons")
 data class PokemonEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = false) val id: Int,
     val name: String,
     val url: String,
     val isFavorite: Boolean,
-    val imageUrl: String?,
-    val height: Double?,
-    val weight: Double?,
-    val types: List<PokemonTypeEntity>
+    val height: Int?,
+    val weight: Int?,
+    val types: List<PokemonTypeEntity>? = null,
+    val sprites: List<PokemonSpriteEntity>? = null
 )

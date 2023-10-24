@@ -5,12 +5,13 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.hvasoft.data.BuildConfig
 import com.hvasoft.data.common.Constants
 import com.hvasoft.data.local.PokemonDatabase
 import com.hvasoft.data.local.entities.PokemonEntity
 import com.hvasoft.data.local.entities.RemoteKeysEntity
 import com.hvasoft.data.remote.PokemonApi
-import com.hvasoft.data.remote.model.PokemonResponseDTO
+import com.hvasoft.data.remote.model.PokemonDTO
 import com.hvasoft.data.remote.network.getSuccess
 import com.hvasoft.data.remote.network.makeSafeRequest
 import kotlinx.coroutines.Dispatchers
@@ -65,16 +66,30 @@ class PokemonRemoteMediator(
         }
 
         try {
-            val request = handleRequest { pokemonApi.getPokemons(
-                limit = state.config.pageSize,
-                offset = page
-            ) }
+            val request = handleRequest {
+                pokemonApi.getPokemons(
+                    limit = state.config.pageSize,
+                    offset = page
+                )
+            }
             val data = withContext(Dispatchers.IO) {
                 makeSafeRequest { request }.getSuccess()
             }
             val pokemonsData = mutableListOf<PokemonEntity>()
             data?.let {
-                val pokemons = it.results.map { pokemonDTO -> pokemonDTO.toEntity() }
+                val pokemons = it.results.map { pokemonDTO ->
+                    val pokemonDetailDTO = getPokemonDetail(pokemonDTO)
+                    PokemonEntity(
+                        id = pokemonDTO.url.split("/")[6].toInt(),
+                        name = pokemonDTO.name,
+                        url = "${BuildConfig.BASE_URL}${pokemonDTO.url}",
+                        isFavorite = false,
+                        height = pokemonDetailDTO.height,
+                        weight = pokemonDetailDTO.weight,
+                        types = pokemonDetailDTO.types,
+                        sprites = pokemonDetailDTO.sprites
+                    )
+                }
                 pokemonsData.clear()
                 pokemonsData.addAll(pokemons)
             }
@@ -106,7 +121,39 @@ class PokemonRemoteMediator(
         }
     }
 
-    private suspend fun handleRequest(request: suspend () -> Response<PokemonResponseDTO>): Response<PokemonResponseDTO> {
+    private suspend fun getPokemonDetail(pokemonDTO: PokemonDTO): PokemonEntity {
+        try {
+            val request = handleRequest {
+                pokemonApi.getPokemonDetailById(
+                    id = pokemonDTO.url.split("/")[6].toInt()
+                )
+            }
+            val data = withContext(Dispatchers.IO) {
+                makeSafeRequest { request }.getSuccess()
+            }
+            var pokemonData: PokemonEntity? = null
+            data?.let { pokemonDetailResponseDTO ->
+                pokemonData =
+                    PokemonEntity(
+                        id = pokemonDetailResponseDTO.id,
+                        name = pokemonDetailResponseDTO.name,
+                        url = "",
+                        isFavorite = false,
+                        height = pokemonDetailResponseDTO.height,
+                        weight = pokemonDetailResponseDTO.weight,
+                        types = pokemonDetailResponseDTO.toEntity().types,
+                        sprites = pokemonDetailResponseDTO.toEntity().sprites
+                    )
+            }
+            return pokemonData!!
+        } catch (e: IOException) {
+            throw e
+        } catch (e: HttpException) {
+            throw e
+        }
+    }
+
+    private suspend inline fun <reified T> handleRequest(crossinline request: suspend () -> Response<T>): Response<T> {
         return withContext(Dispatchers.IO) {
             request()
         }

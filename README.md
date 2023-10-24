@@ -26,3 +26,6 @@ el placeholder desde un XML.
 
 2.1. "Con la misma API obtener el detalle de cada pokémon y persistir al menos su id, nombre, imagen
 sprite frontal por defecto, altura, peso, nombre de los tipos del pokémon. "
+
+2.2. En una pantalla mostrar un listado vertical con el nombre y el sprite del Pokémon. 
+Utilizar el componente de la actividad 1 para mostrar la imagen o la inicial del nombre.

@@ -1,12 +1,15 @@
 package com.hvasoft.pokedex.presentation.ui.common
 
+//import com.bumptech.glide.Glide
+//import com.bumptech.glide.load.engine.DiskCacheStrategy
+import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-//import com.bumptech.glide.Glide
-//import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.snackbar.Snackbar
 import com.hvasoft.pokedex.R
 
@@ -30,12 +33,30 @@ fun Fragment.showPopUpMessage(msg: Any, isError: Boolean = false) {
 
 fun ImageView.loadImageWithUrl(
     url: String?,
-    isCircle: Boolean = false
+    isCircle: Boolean = false,
+    onSuccess: () -> Unit = {},
+    onError: () -> Unit = {}
 ) {
     var glideRequest = Glide.with(this)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .centerCrop()
+
     if (isCircle) glideRequest = glideRequest.circleCrop()
-    glideRequest.into(this)
+
+    glideRequest
+        .into(object : CustomTarget<Drawable>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                setImageDrawable(resource)
+                onSuccess()
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                onError()
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                onError()
+            }
+        })
 }

@@ -1,14 +1,14 @@
 package com.hvasoft.data.remote.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class PokemonResponseDTO(
-    @SerializedName("count")
+    @Json(name = "count")
     val count: Int? = null,
-    @SerializedName("next")
+    @Json(name = "next")
     val next: String? = null,
-    @SerializedName("previous")
+    @Json(name = "previous")
     val previous: String? = null,
-    @SerializedName("results")
+    @Json(name = "results")
     val results: List<PokemonDTO>
 )

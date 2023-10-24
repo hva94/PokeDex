@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "remote_keys")
 data class RemoteKeysEntity(
-    @PrimaryKey(autoGenerate = true) val pokemonId: Int,
+    @PrimaryKey(autoGenerate = false) val pokemonId: Int,
     val prevKey: Int?,
     val nextKey: Int?
 )

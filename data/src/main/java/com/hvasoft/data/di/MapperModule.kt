@@ -2,6 +2,7 @@ package com.hvasoft.data.di
 
 import com.hvasoft.data.mapper.PokemonMapper
 import com.hvasoft.data.mapper.PokemonMapperEntity
+import com.hvasoft.data.mapper.PokemonSpriteMapperEntity
 import com.hvasoft.data.mapper.PokemonTypeMapperEntity
 import dagger.Module
 import dagger.Provides
@@ -19,12 +20,20 @@ object MapperModule {
 
     @Provides
     @Singleton
+    fun providesPokemonSpriteMapperEntity(): PokemonSpriteMapperEntity = PokemonSpriteMapperEntity()
+
+    @Provides
+    @Singleton
     fun providesPokemonMapper(): PokemonMapper = PokemonMapper()
 
     @Provides
     @Singleton
     fun providesPokemonMapperEntity(
-        pokemonTypeMapperEntity: PokemonTypeMapperEntity
-    ): PokemonMapperEntity = PokemonMapperEntity(pokemonTypeMapperEntity)
+        pokemonTypeMapperEntity: PokemonTypeMapperEntity,
+        pokemonSpriteMapperEntity: PokemonSpriteMapperEntity
+    ): PokemonMapperEntity = PokemonMapperEntity(
+        pokemonTypeMapperEntity,
+        pokemonSpriteMapperEntity
+    )
 
 }

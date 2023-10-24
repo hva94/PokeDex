@@ -4,9 +4,9 @@ data class Pokemon(
     val id: Int,
     val name: String,
     val url: String,
-    val isFavorite: Boolean,
-    val imageUrl: String?,
-    val height: Double?,
-    val weight: Double?,
-    val types: List<PokemonType>
+    val height: Int?,
+    val weight: Int?,
+    val types: List<PokemonType>,
+    val sprites: List<PokemonSprite>,
+    val isFavorite: Boolean
 )
