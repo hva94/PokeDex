@@ -4,7 +4,9 @@
     <color name="light_primary">#FFD700</color>
     <color name="dark_primary">#FF4500</color>
     <color name="light_text_primary">#FF000000</color>
-    <color name="dark_text_primary">#FFFFFFFF</color>
-    <color name="accent">#E92662</color>
+    <color name="dark_text_primary">#F6F3FF</color>
+    <color name="error">#FF3333</color>
+    <color name="light_accent">#FF5800</color>
+    <color name="dark_accent">#FFC400</color>
 
 </resources>

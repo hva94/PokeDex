@@ -60,9 +60,8 @@ dependencies {
     implementation(libs.bundles.database.impl)
     kapt(libs.room.compiler)
 
-    // Paging3
+    // Paging
     implementation(libs.bundles.paging.impl)
-    implementation(libs.paging.runtime)
     implementation(libs.room.paging)
     testImplementation(libs.paging.common)
 

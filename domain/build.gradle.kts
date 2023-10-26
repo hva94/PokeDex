@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+   id("kotlin-parcelize")
 }
 
 android {
@@ -47,11 +48,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Paging3
+    // Paging
     implementation(libs.bundles.paging.impl)
-    implementation(libs.paging.runtime)
-    implementation(libs.room.paging)
-    testImplementation(libs.paging.common)
 
     implementation(libs.core.ktx)
     testImplementation(libs.junit)

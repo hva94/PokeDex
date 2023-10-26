@@ -4,6 +4,9 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/light_primary</item>
         <item name="colorOnPrimary">@color/light_text_primary</item>
+        <item name="android:textColorSecondary">@color/light_text_primary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnSecondary">@color/light_accent</item>
     </style>
 
     <style name="Theme.PokeDex" parent="Base.Theme.PokeDex" />

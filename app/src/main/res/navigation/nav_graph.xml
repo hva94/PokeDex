@@ -9,6 +9,26 @@
         android:id="@+id/homeFragment"
         android:name="com.hvasoft.pokedex.presentation.ui.home.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.hvasoft.pokedex.presentation.ui.detail.DetailFragment"
+        android:label="@string/label_fragment_detail"
+        tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/action_detailFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="pokemon"
+            app:argType="com.hvasoft.domain.model.Pokemon"
+            app:nullable="false" />
+    </fragment>
 
 </navigation>

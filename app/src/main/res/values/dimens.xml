@@ -2,6 +2,8 @@
 <resources>
     <dimen name="item_card_width">180dp</dimen>
     <dimen name="item_card_height">180dp</dimen>
+    <dimen name="photo_width">320dp</dimen>
+    <dimen name="photo_height">320dp</dimen>
 
     <dimen name="common_padding_none">0dp</dimen>
     <dimen name="common_padding_micro">4dp</dimen>
@@ -10,6 +12,7 @@
 
     <dimen name="dimen_12">12dp</dimen>
     <dimen name="dimen_24">24dp</dimen>
+    <dimen name="dimen_32">32dp</dimen>
     <dimen name="dimen_64">64dp</dimen>
     <dimen name="dimen_250">250dp</dimen>
     <dimen name="dimen_280">280dp</dimen>

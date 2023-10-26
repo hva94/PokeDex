@@ -4,6 +4,9 @@
         <!-- Customize your dark theme here. -->
         <item name="colorPrimary">@color/dark_primary</item>
         <item name="colorOnPrimary">@color/dark_text_primary</item>
+        <item name="android:textColorSecondary">@color/dark_text_primary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnSecondary">@color/dark_accent</item>
     </style>
 
     <style name="Theme.PokeDex" parent="Base.Theme.PokeDex" />

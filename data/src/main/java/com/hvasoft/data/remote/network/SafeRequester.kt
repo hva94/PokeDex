@@ -1,7 +1,6 @@
 package com.hvasoft.data.remote.network
 
 import com.hvasoft.domain.common.Resource
-import com.hvasoft.domain.common.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -9,7 +8,7 @@ import retrofit2.Response
 /**
  * Allows to make a request in a safe way catching possible errors
  * and sending report to app center and prints log with timber
- * @return Result<T>: returns a Result wrapper with the given expected data
+ * @return Resource<T>: returns a Resource wrapper with the given expected data
  */
 suspend fun <T : Any> makeSafeRequest(
     execute: suspend () -> Response<T>
@@ -19,12 +18,12 @@ suspend fun <T : Any> makeSafeRequest(
             val response = execute()
             val body = response.body()
             if (response.isSuccessful && body != null) {
-                Resource.success(body)
+                Resource.Success(body)
             } else {
-                Resource.error(message = response.message())
+                Resource.Error(exception = null, errorMessage = response.message())
             }
-        } catch (e: Exception) {
-            Resource.error(e.localizedMessage ?: "Something went wrong")
+        } catch (exception: Exception) {
+            Resource.Error(exception = exception, errorMessage = exception.message)
         }
     }
 }
@@ -33,5 +32,8 @@ suspend fun <T : Any> makeSafeRequest(
  * Extension function to retrieve only the success value from Resource
  */
 fun <T> Resource<T>.getSuccess(): T? {
-    return if (this.status == Status.SUCCESS) data else null
+    return if (this is Resource.Success)
+        this.data
+    else null
+
 }

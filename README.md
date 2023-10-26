@@ -39,4 +39,13 @@ Utilizar el componente de la actividad 1 para mostrar la imagen o la inicial del
 
 2.4. La información debe estar disponible cuando el dispositivo no tenga conexión a internet.
 
+2.5. Al dar clic sobre la imagen de un item mostrarla expandida sobre la misma pantalla o en una
+pantalla independiente.
+
+2.6. Al dar clic sobre un item de la lista abrir la pantalla detalle (ver actividad 3).
+
 2.7. Permitir marcar/desmarcar un pokémon como favorito desde la pantalla principal.
+
+3.0. Crear una pantalla en Java para mostrar el detalle con la información del pokémon.
+
+3.1. Agregar un botón que permita marcar/desmarcar un favorito.

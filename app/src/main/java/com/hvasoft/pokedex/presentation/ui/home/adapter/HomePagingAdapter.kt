@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hvasoft.domain.model.Pokemon
 import com.hvasoft.pokedex.R
 import com.hvasoft.pokedex.databinding.ItemPokemonBinding
+import com.hvasoft.pokedex.presentation.ui.common.getInitials
 import com.hvasoft.pokedex.presentation.ui.common.isInputInitialValid
 import com.hvasoft.pokedex.presentation.ui.common.loadImageWithUrl
 
@@ -18,10 +19,12 @@ class HomePagingAdapter(private val listener: OnClickListener) :
     PagingDataAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback()) {
 
     private lateinit var context: Context
+    private lateinit var homeLoadingStateAdapter: HomeLoadingStateAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         val view = LayoutInflater.from(context).inflate(R.layout.item_pokemon, parent, false)
+        homeLoadingStateAdapter = HomeLoadingStateAdapter(this)
         return ViewHolder(view)
     }
 
@@ -37,20 +40,24 @@ class HomePagingAdapter(private val listener: OnClickListener) :
                         url = imageUrl,
                         isCircle = true,
                         onSuccess = {
+                            ivPokemon.isVisible = true
                             tvPokemonName.isVisible = true
+                            tvInitials.isVisible = false
                             tvPokemonName.text = pokemon.name
                             cbFavorite.isVisible = true
                             cbFavorite.isChecked = pokemon.isFavorite
                             ivPlaceholder.isVisible = false
                         },
                         onError = {
-                            if (pokemon.name.isInputInitialValid()) {
+                            if (pokemon.name.isNotEmpty() || pokemon.name.isInputInitialValid()) {
+                                ivPokemon.isVisible = false
                                 tvPokemonName.isVisible = false
-                                cbFavorite.isVisible = false
+                                tvInitials.text = pokemon.name.getInitials()
                                 tvInitials.isVisible = true
-                                tvInitials.text = pokemon.name
+                                cbFavorite.isVisible = false
                                 ivPlaceholder.isVisible = false
                             } else {
+                                ivPokemon.isVisible = false
                                 tvPokemonName.isVisible = false
                                 cbFavorite.isVisible = false
                                 tvInitials.isVisible = false
@@ -58,6 +65,7 @@ class HomePagingAdapter(private val listener: OnClickListener) :
                             }
                         }
                     )
+                    homeLoadingStateAdapter.NetworkStateItemViewHolder(binding) { retry() }
                 }
             }
         }
@@ -72,6 +80,9 @@ class HomePagingAdapter(private val listener: OnClickListener) :
             }
             binding.cbFavorite.setOnClickListener {
                 listener.onClickFavorite(pokemon)
+            }
+            binding.btnRetry.setOnClickListener {
+                retry()
             }
         }
     }

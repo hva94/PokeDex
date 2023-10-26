@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.hvasoft.domain.interactor.GetPagedPokemonsUseCase
-import com.hvasoft.domain.interactor.UpdatePokemonUseCase
+import com.hvasoft.domain.interactor.ToggleFavoritePokemonUseCase
 import com.hvasoft.domain.model.Pokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getPagedPokemonsUseCase: GetPagedPokemonsUseCase,
-    private val updatePokemonUseCase: UpdatePokemonUseCase
+    private val toggleFavoritePokemonUseCase: ToggleFavoritePokemonUseCase
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow<HomeState>(HomeState.Loading)
@@ -36,17 +36,17 @@ class HomeViewModel @Inject constructor(
                     .flowOn(Dispatchers.IO)
                     .cachedIn(viewModelScope)
                     .collect { pagingData ->
-                        _uiState.update { HomeState.Success(pagingData = pagingData) }
+                        _uiState.update { HomeState.Success(pagingData) }
                     }
-            } catch (e: Exception) {
-                _uiState.update { HomeState.Failure(e.localizedMessage) }
+            } catch (exception: Exception) {
+                _uiState.update { HomeState.Failure(exception.localizedMessage) }
             }
         }
     }
 
     fun updatePokemon(pokemon: Pokemon) {
         viewModelScope.launch(Dispatchers.IO) {
-            updatePokemonUseCase(pokemon)
+            toggleFavoritePokemonUseCase(pokemon)
         }
     }
 }

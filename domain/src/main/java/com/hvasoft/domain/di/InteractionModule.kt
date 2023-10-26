@@ -2,8 +2,8 @@ package com.hvasoft.domain.di
 
 import com.hvasoft.domain.interactor.GetPagedPokemonsUseCase
 import com.hvasoft.domain.interactor.GetPagedPokemonsUseCaseImpl
-import com.hvasoft.domain.interactor.UpdatePokemonUseCase
-import com.hvasoft.domain.interactor.UpdatePokemonUseCaseImpl
+import com.hvasoft.domain.interactor.ToggleFavoritePokemonUseCase
+import com.hvasoft.domain.interactor.ToggleFavoritePokemonUseCaseImpl
 import com.hvasoft.domain.repository.PokemonRepository
 import dagger.Module
 import dagger.Provides
@@ -22,6 +22,6 @@ object InteractionModule {
     @Provides
     fun provideUpdatePokemonUseCase(
         pokemonRepository: PokemonRepository
-    ): UpdatePokemonUseCase = UpdatePokemonUseCaseImpl(pokemonRepository)
+    ): ToggleFavoritePokemonUseCase = ToggleFavoritePokemonUseCaseImpl(pokemonRepository)
 
 }

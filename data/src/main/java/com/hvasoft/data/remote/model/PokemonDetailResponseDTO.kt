@@ -2,6 +2,8 @@ package com.hvasoft.data.remote.model
 
 import com.hvasoft.data.BuildConfig
 import com.hvasoft.data.local.entities.PokemonEntity
+import com.hvasoft.data.local.entities.PokemonSpriteEntity
+import com.hvasoft.data.local.entities.PokemonTypeEntity
 import com.squareup.moshi.Json
 
 data class PokemonDetailResponseDTO(
@@ -20,8 +22,20 @@ data class PokemonDetailResponseDTO(
             isFavorite = false,
             height = height,
             weight = weight,
-            types = null,
-            sprites = sprites?.let { listOf(it.toEntity()) } ?: emptyList()
+            types = getEntityTypes(types),
+            sprites = getEntitySprites(sprites)
         )
     }
+
+    private fun getEntityTypes(types: List<PokemonTypeDTO>?): List<PokemonTypeEntity> {
+        if (types.isNullOrEmpty()) return emptyList()
+        val pokemonTypeEntities = mutableListOf<PokemonTypeEntity>()
+        types.forEach { pokemonTypeDTO ->
+            pokemonTypeDTO.type.let { pokemonTypeEntities.add(it.toEntity()) }
+        }
+        return pokemonTypeEntities
+    }
+
+    private fun getEntitySprites(sprites: PokemonSpriteDTO?): List<PokemonSpriteEntity> =
+        sprites?.let { listOf(it.toEntity()) } ?: emptyList()
 }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -70,6 +71,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.glide)
+    implementation(libs.fragment)
 
     // Navigation
     implementation(libs.navigation.fragment)
@@ -83,11 +85,11 @@ dependencies {
     implementation(libs.bundles.database.impl)
     kapt(libs.room.compiler)
 
-    // Paging3
+    // Paging
     implementation(libs.bundles.paging.impl)
-    implementation(libs.paging.runtime)
-    implementation(libs.room.paging)
-    testImplementation(libs.paging.common)
+
+    // RxJava
+    implementation(libs.bundles.rxjava.impl)
 
     // Testing
     testImplementation(libs.junit)

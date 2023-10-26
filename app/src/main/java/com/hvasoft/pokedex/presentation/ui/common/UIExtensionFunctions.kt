@@ -11,13 +11,13 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.snackbar.Snackbar
 import com.hvasoft.pokedex.R
 
-fun Fragment.showPopUpMessage(msg: Any, isError: Boolean = false) {
+fun Fragment.showPopUpMessage(anyMessage: Any, isError: Boolean = false) {
     val duration = if (isError) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT
-    val message = if (msg is Int) getString(msg) else msg.toString()
+    val message = if (anyMessage is Int) getString(anyMessage) else anyMessage.toString()
     view?.let { rootView ->
         val snackBar = Snackbar.make(rootView, message, duration)
         val params = snackBar.view.layoutParams as ViewGroup.MarginLayoutParams
-        val extraBottomMargin = resources.getDimensionPixelSize(R.dimen.common_padding_default)
+        val extraBottomMargin = resources.getDimensionPixelSize(R.dimen.dimen_64)
         params.setMargins(
             params.leftMargin,
             params.topMargin,
@@ -39,9 +39,7 @@ fun ImageView.loadImageWithUrl(
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .centerCrop()
-
     if (isCircle) glideRequest = glideRequest.circleCrop()
-
     glideRequest
         .into(object : CustomTarget<Drawable>() {
             override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
@@ -65,8 +63,18 @@ fun String.isInputInitialValid(): Boolean {
     val words = split(" ")
     if (words.isNotEmpty()) {
         val firstWord = words.first()
-        if (firstWord.isNotEmpty() && !firstWord.first().isLetterOrDigit())
-            return false
+        if (firstWord.isNotEmpty() && firstWord.first().isLetterOrDigit())
+            return true
     }
     return false
+}
+
+fun String.getInitials(): String {
+    val words = split(" ")
+    if (words.isNotEmpty()) {
+        val firstWord = words.first()
+        if (firstWord.isNotEmpty() && firstWord.first().isLetterOrDigit())
+            return firstWord.first().toString()
+    }
+    return ""
 }

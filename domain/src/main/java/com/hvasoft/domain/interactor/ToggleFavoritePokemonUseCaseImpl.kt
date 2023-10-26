@@ -7,16 +7,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UpdatePokemonUseCaseImpl @Inject constructor(
+class ToggleFavoritePokemonUseCaseImpl @Inject constructor(
     private val repository: PokemonRepository
-) : UpdatePokemonUseCase {
-    override suspend fun invoke(pokemon: Pokemon) = withContext(Dispatchers.IO) {
+) : ToggleFavoritePokemonUseCase {
+    override suspend fun invoke(pokemon: Pokemon): Pokemon = withContext(Dispatchers.IO) {
         try {
             val pokemonUpdated = pokemon.copy(isFavorite = !pokemon.isFavorite)
             val result = repository.updatePokemon(pokemonUpdated)
-            if (result == 0) throw Exception("Update error")
-        } catch (e: SQLiteConstraintException){
-            throw Exception("Update error")
+            if (result == 1)
+                pokemonUpdated
+            else
+                throw SQLiteConstraintException()
+        } catch (exception: SQLiteConstraintException) {
+            throw exception
         }
     }
 }
